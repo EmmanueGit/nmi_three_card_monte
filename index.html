@@ -271,6 +271,40 @@
   .accent-bar { width: 100%; max-width: 700px; height: 3px; background: linear-gradient(90deg, transparent, var(--nmi-orange), transparent); opacity: 0.6; margin-bottom: 0.5rem; }
   footer { font-size: 10px; color: rgba(136,153,187,0.45); letter-spacing: 0.1em; text-align: center; }
 
+  /* LEVEL SELECTOR */
+  .level-selector {
+    display: flex; flex-direction: column; gap: 5px;
+    margin-bottom: 0.75rem; width: 100%;
+  }
+  .level-selector-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.2em;
+    color: var(--nmi-orange); text-transform: uppercase; margin-bottom: 2px;
+  }
+  .level-btn-row { display: flex; gap: 5px; flex-wrap: wrap; }
+  .level-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 5px; border: 1.5px solid transparent;
+    cursor: pointer; background: rgba(255,255,255,0.05);
+    color: var(--nmi-gray);
+    transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.1s;
+    flex: 1 1 auto; white-space: nowrap;
+  }
+  .level-btn:hover { background: rgba(255,255,255,0.1); color: var(--nmi-white); transform: translateY(-1px); }
+  .level-btn.selected { color: var(--nmi-white); border-color: currentColor; background: rgba(255,255,255,0.08); }
+  .level-btn[data-lvl="0"].selected  { color: #4cde9f; border-color: #4cde9f; background: rgba(76,222,159,0.1); }
+  .level-btn[data-lvl="1"].selected  { color: #f4c430; border-color: #f4c430; background: rgba(244,196,48,0.1); }
+  .level-btn[data-lvl="2"].selected  { color: #f47920; border-color: #f47920; background: rgba(244,121,32,0.1); }
+  .level-btn[data-lvl="3"].selected  { color: #ff5555; border-color: #ff5555; background: rgba(255,85,85,0.1); }
+  .level-btn[data-lvl="4"].selected  { color: #cc22cc; border-color: #cc22cc; background: rgba(204,34,204,0.1); }
+  .level-btn[data-lvl="auto"].selected { color: var(--nmi-orange); border-color: var(--nmi-orange); background: rgba(244,121,32,0.1); }
+
+  @media (orientation: landscape) and (max-height: 500px) {
+    .level-selector { margin-bottom: 0.4rem; }
+    .level-btn { font-size: 9px; padding: 3px 7px; }
+  }
+
   /* MODAL */
   .overlay {
     position: fixed; inset: 0;
@@ -397,6 +431,15 @@
       <span class="diff-name" id="diffName">Easy</span>
     </div>
 
+    <!-- LEVEL SELECTOR -->
+    <div class="level-selector">
+      <span class="level-selector-label">Select Level</span>
+      <div class="level-btn-row">
+        <button class="level-btn selected" data-lvl="2" onclick="selectLevel(2)">Classic</button>
+        <button class="level-btn" data-lvl="3" onclick="selectLevel(3)">Pro</button>
+      </div>
+    </div>
+
     <div class="score-bar">
       <div class="score-item">
         <span class="score-label">Wins</span>
@@ -480,8 +523,8 @@
 const LEVELS = [
   { name:'Easy',   color:'#4cde9f', pips:1, swaps:[7,9],   speedMs:360, memoriseMs:3500, fakeout:false, tripleSwap:false },
   { name:'Medium', color:'#f4c430', pips:2, swaps:[10,13], speedMs:290, memoriseMs:2800, fakeout:false, tripleSwap:false },
-  { name:'Hard',   color:'#f47920', pips:3, swaps:[14,17], speedMs:220, memoriseMs:2200, fakeout:true,  tripleSwap:false },
-  { name:'Brutal', color:'#ff5555', pips:4, swaps:[18,22], speedMs:160, memoriseMs:1600, fakeout:true,  tripleSwap:true  },
+  { name:'Classic',   color:'#f47920', pips:3, swaps:[14,17], speedMs:220, memoriseMs:2200, fakeout:true,  tripleSwap:false },
+  { name:'Pro', color:'#ff5555', pips:4, swaps:[18,22], speedMs:160, memoriseMs:1600, fakeout:true,  tripleSwap:true  },
   { name:'Insane', color:'#cc22cc', pips:5, swaps:[24,30], speedMs:115, memoriseMs:1100, fakeout:true,  tripleSwap:true  },
 ];
 
@@ -499,6 +542,7 @@ let busy = false;
 let cardEls = [];
 let timerRAF, timerRunning = false;
 let autoShuffleTimeout = null;
+let lockedLevel = 2; // 2=Hard (default), 3=Brutal
 
 /* ── HELPERS ── */
 function isLandscape() { return window.innerWidth > window.innerHeight && window.innerHeight < 500; }
@@ -507,7 +551,16 @@ function cH() { return isLandscape() ? 114 : 172; }
 function tableH() { return isLandscape() ? 130 : 200; }
 
 function getLevel() {
-  return LEVELS[Math.min(streak, LEVELS.length - 1)];
+  return LEVELS[lockedLevel];
+}
+
+/* ── LEVEL SELECTOR ── */
+function selectLevel(val) {
+  lockedLevel = val;
+  document.querySelectorAll('.level-btn').forEach(btn => {
+    btn.classList.toggle('selected', parseInt(btn.dataset.lvl) === lockedLevel);
+  });
+  updateDiffUI();
 }
 
 function randBetween(a,b) { return a + Math.floor(Math.random()*(b-a+1)); }
