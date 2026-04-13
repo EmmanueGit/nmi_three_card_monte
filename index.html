@@ -49,15 +49,15 @@
   .game-wrap {
     position: relative; z-index: 10;
     width: 100%; max-width: 780px;
-    padding: 1.5rem 1.5rem 1rem;
+    padding: 1.25rem 1.5rem 0.75rem;
     display: flex; flex-direction: column;
     align-items: center;
   }
 
   /* HEADER */
-  .logo-area { display: flex; align-items: center; gap: 14px; margin-bottom: 0.4rem; }
-  .logo-svg { height: 52px; width: auto; }
-  .divider-v { width: 1.5px; height: 38px; background: rgba(244,121,32,0.4); }
+  .logo-area { display: flex; align-items: center; gap: 14px; margin-bottom: 0.35rem; }
+  .logo-svg { height: 50px; width: auto; }
+  .divider-v { width: 1.5px; height: 36px; background: rgba(244,121,32,0.4); }
   .booth-label .top {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 10px; font-weight: 600;
@@ -69,20 +69,15 @@
     font-size: 24px; font-weight: 900;
     color: var(--nmi-white); letter-spacing: 0.04em; line-height: 1;
   }
-  .orange-line { width: 50px; height: 3px; background: var(--nmi-orange); border-radius: 2px; margin: 0.45rem 0 0.25rem; }
-  .tagline { font-size: 11px; color: var(--nmi-gray); letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; margin-bottom: 0.9rem; }
+  .orange-line { width: 50px; height: 3px; background: var(--nmi-orange); border-radius: 2px; margin: 0.35rem 0 0.2rem; }
+  .tagline { font-size: 11px; color: var(--nmi-gray); letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500; margin-bottom: 0.75rem; }
 
-  /* DIFFICULTY BADGE */
-  .diff-row {
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 0.75rem;
-  }
-  .diff-label { font-size: 11px; color: var(--nmi-gray); letter-spacing: 0.1em; text-transform: uppercase; }
-  .diff-pip {
-    width: 10px; height: 10px; border-radius: 2px;
-    background: rgba(255,255,255,0.1);
-    transition: background 0.3s;
-  }
+  /* ── DIFFICULTY SELECTOR ── */
+  .diff-section { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; margin-bottom: 0.6rem; width: 100%; }
+
+  .diff-row { display: flex; align-items: center; gap: 8px; }
+  .diff-label { font-size: 10px; color: var(--nmi-gray); letter-spacing: 0.1em; text-transform: uppercase; }
+  .diff-pip { width: 9px; height: 9px; border-radius: 2px; background: rgba(255,255,255,0.1); transition: background 0.3s; }
   .diff-pip.lit-1 { background: #4cde9f; }
   .diff-pip.lit-2 { background: #f4c430; }
   .diff-pip.lit-3 { background: #f47920; }
@@ -92,20 +87,98 @@
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 13px; font-weight: 700;
     letter-spacing: 0.12em; text-transform: uppercase;
-    min-width: 72px;
-    transition: color 0.3s;
+    min-width: 66px; transition: color 0.3s;
   }
+
+  .diff-btns { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
+  .diff-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 11px; border-radius: 5px; cursor: pointer;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04); color: var(--nmi-gray);
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+  }
+  .diff-btn:hover { border-color: rgba(244,121,32,0.45); color: var(--nmi-white); }
+  .diff-btn.active { background: rgba(244,121,32,0.18); border-color: var(--nmi-orange); color: var(--nmi-white); }
+
+  /* ── SETTINGS PANEL ── */
+  .settings-toggle {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--nmi-gray); background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; gap: 5px;
+    padding: 2px 6px; transition: color 0.15s;
+  }
+  .settings-toggle:hover { color: var(--nmi-orange); }
+  .settings-toggle .arrow { display: inline-block; transition: transform 0.2s; font-size: 9px; }
+  .settings-toggle.open .arrow { transform: rotate(180deg); }
+
+  .settings-panel {
+    width: 100%; max-width: 290px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(244,121,32,0.2);
+    border-radius: 10px; padding: 0.85rem 1.1rem;
+    flex-direction: column; gap: 0.6rem;
+    display: none;
+  }
+  .settings-panel.open { display: flex; }
+
+  .setting-row { display: flex; flex-direction: column; gap: 4px; }
+  .setting-top { display: flex; justify-content: space-between; align-items: baseline; }
+  .setting-name { font-size: 11px; color: var(--nmi-gray); letter-spacing: 0.07em; text-transform: uppercase; }
+  .setting-val { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; color: var(--nmi-orange); min-width: 40px; text-align: right; }
+
+  input[type=range] {
+    width: 100%; height: 4px; cursor: pointer;
+    background: rgba(255,255,255,0.1); border-radius: 2px;
+    appearance: none; -webkit-appearance: none; outline: none;
+    accent-color: var(--nmi-orange);
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 14px; height: 14px;
+    border-radius: 50%; background: var(--nmi-orange);
+    cursor: pointer; border: 2px solid var(--nmi-navy-mid);
+  }
+
+  .toggle-row { display: flex; justify-content: space-between; align-items: center; }
+  .toggle-lbl { font-size: 11px; color: var(--nmi-gray); letter-spacing: 0.07em; text-transform: uppercase; }
+  .tog {
+    width: 34px; height: 18px; border-radius: 9px;
+    background: rgba(255,255,255,0.1); position: relative;
+    cursor: pointer; transition: background 0.2s;
+    border: none; outline: none; flex-shrink: 0;
+  }
+  .tog.on { background: var(--nmi-orange); }
+  .tog::after {
+    content: ''; position: absolute;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: #fff; top: 3px; left: 3px; transition: left 0.2s;
+  }
+  .tog.on::after { left: 19px; }
+
+  .settings-divider { height: 1px; background: rgba(244,121,32,0.12); margin: 0.1rem 0; }
+
+  .settings-reset {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    background: none; border: 1px solid rgba(244,121,32,0.22);
+    border-radius: 5px; color: var(--nmi-gray); cursor: pointer;
+    padding: 5px 10px; width: 100%;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .settings-reset:hover { border-color: var(--nmi-orange); color: var(--nmi-white); }
 
   /* PHASE STRIP */
   .phase-strip {
     display: flex; align-items: center; gap: 0;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.65rem;
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(244,121,32,0.2);
     border-radius: 8px; overflow: hidden;
   }
   .phase-step {
-    padding: 0.4rem 1rem;
+    padding: 0.38rem 0.95rem;
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 12px; font-weight: 600;
     letter-spacing: 0.12em; text-transform: uppercase;
@@ -117,10 +190,10 @@
   .phase-step.done   { color: #4cde9f; }
   .phase-sep { width: 1px; height: 28px; background: rgba(244,121,32,0.2); }
   .phase-num {
-    width: 18px; height: 18px; border-radius: 50%;
+    width: 17px; height: 17px; border-radius: 50%;
     background: rgba(244,121,32,0.15);
     display: flex; align-items: center; justify-content: center;
-    font-size: 10px; font-weight: 700; color: var(--nmi-orange); flex-shrink: 0;
+    font-size: 9px; font-weight: 700; color: var(--nmi-orange); flex-shrink: 0;
   }
   .phase-step.done .phase-num { background: rgba(76,222,159,0.15); color: #4cde9f; }
 
@@ -129,64 +202,41 @@
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 19px; font-weight: 700;
     letter-spacing: 0.05em; color: var(--nmi-white);
-    margin-bottom: 1rem; text-align: center;
-    min-height: 26px; transition: opacity 0.3s;
+    margin-bottom: 0.7rem; text-align: center; min-height: 26px;
   }
   .instruction-banner span { color: var(--nmi-orange); }
   .instruction-banner .warn { color: #ff5555; }
 
-  /* COUNTDOWN TIMER BAR */
+  /* TIMER BAR */
   .timer-bar-wrap {
-    width: 100%; max-width: 420px;
-    height: 5px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 3px;
-    margin-bottom: 0.75rem;
-    overflow: hidden;
-    opacity: 0;
-    transition: opacity 0.3s;
+    width: 100%; max-width: 400px; height: 5px;
+    background: rgba(255,255,255,0.08); border-radius: 3px;
+    margin-bottom: 0.6rem; overflow: hidden;
+    opacity: 0; transition: opacity 0.3s;
   }
   .timer-bar-wrap.visible { opacity: 1; }
-  .timer-bar {
-    height: 100%; width: 100%;
-    background: var(--nmi-orange);
-    border-radius: 3px;
-    transform-origin: left;
-    transition: background 0.5s;
-  }
+  .timer-bar { height: 100%; width: 100%; background: var(--nmi-orange); border-radius: 3px; transform-origin: left; transition: background 0.5s; }
 
   /* CARD TABLE */
   .card-table {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    margin-bottom: 1.1rem;
+    position: relative; width: 100%; height: 200px;
+    margin-bottom: 1rem;
     display: flex; align-items: center; justify-content: center;
   }
 
-  .monte-card {
-    position: absolute;
-    cursor: default;
-    user-select: none;
-    z-index: 2;
-  }
-
+  .monte-card { position: absolute; cursor: default; user-select: none; z-index: 2; }
   .monte-card.clickable { cursor: pointer; }
   .monte-card.clickable:hover .card-inner-3d { transform: translateY(-10px); filter: brightness(1.12); }
 
   .card-inner-3d {
-    width: 100%; height: 100%;
-    position: relative; transform-style: preserve-3d;
+    width: 100%; height: 100%; position: relative;
+    transform-style: preserve-3d;
     transition: transform 0.5s cubic-bezier(0.4,0,0.2,1), filter 0.2s;
   }
-
   .monte-card.flipped .card-inner-3d { transform: rotateY(180deg); }
   .monte-card.flipped.clickable:hover .card-inner-3d { transform: rotateY(180deg) translateY(-10px); }
 
-  .c-face, .c-back {
-    position: absolute; inset: 0;
-    border-radius: 12px; backface-visibility: hidden;
-  }
+  .c-face, .c-back { position: absolute; inset: 0; border-radius: 12px; backface-visibility: hidden; }
 
   .c-face {
     background: #fff; border: 2px solid #ddd;
@@ -206,8 +256,7 @@
   .c-suit-lg { font-size: 52px; line-height: 1; }
 
   .c-back {
-    background: var(--nmi-navy-mid);
-    border: 2px solid var(--nmi-orange);
+    background: var(--nmi-navy-mid); border: 2px solid var(--nmi-orange);
     display: flex; align-items: center; justify-content: center;
     box-shadow: 0 8px 32px rgba(0,0,0,0.5); overflow: hidden;
   }
@@ -229,13 +278,9 @@
   .monte-card.wrong .c-back,
   .monte-card.wrong .c-face   { border-color: #ff5555; box-shadow: 0 0 0 3px rgba(255,85,85,0.45), 0 8px 32px rgba(0,0,0,0.5); }
 
-  /* SHAKE on wrong */
   @keyframes shake {
-    0%,100%{transform:translateX(0)}
-    20%{transform:translateX(-7px)}
-    40%{transform:translateX(7px)}
-    60%{transform:translateX(-5px)}
-    80%{transform:translateX(5px)}
+    0%,100%{transform:translateX(0)} 20%{transform:translateX(-7px)}
+    40%{transform:translateX(7px)} 60%{transform:translateX(-5px)} 80%{transform:translateX(5px)}
   }
   .monte-card.shake { animation: shake 0.4s ease; }
 
@@ -244,8 +289,7 @@
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 22px; font-weight: 700;
     letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 14px 64px; border: none; border-radius: 6px;
-    cursor: pointer;
+    padding: 13px 60px; border: none; border-radius: 6px; cursor: pointer;
     transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
     margin-bottom: 1rem;
   }
@@ -256,37 +300,31 @@
 
   /* SCORE BAR */
   .score-bar {
-    display: flex; gap: 2rem;
-    margin-bottom: 0.9rem;
-    padding: 0.5rem 2rem;
+    display: flex; gap: 1.75rem; margin-bottom: 0.75rem;
+    padding: 0.45rem 1.75rem;
     background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(244,121,32,0.2);
-    border-radius: 8px;
+    border: 1px solid rgba(244,121,32,0.2); border-radius: 8px;
   }
   .score-item { display: flex; flex-direction: column; align-items: center; gap: 1px; }
   .score-label { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; color: var(--nmi-orange); text-transform: uppercase; }
   .score-value { font-family: 'Barlow Condensed', sans-serif; font-size: 26px; font-weight: 900; color: var(--nmi-white); line-height: 1; }
   .score-divider { width: 1px; background: rgba(244,121,32,0.3); align-self: stretch; }
 
-  .accent-bar { width: 100%; max-width: 700px; height: 3px; background: linear-gradient(90deg, transparent, var(--nmi-orange), transparent); opacity: 0.6; margin-bottom: 0.5rem; }
+  .accent-bar { width: 100%; max-width: 700px; height: 3px; background: linear-gradient(90deg, transparent, var(--nmi-orange), transparent); opacity: 0.6; margin-bottom: 0.4rem; }
   footer { font-size: 10px; color: rgba(136,153,187,0.45); letter-spacing: 0.1em; text-align: center; }
 
   /* MODAL */
   .overlay {
-    position: fixed; inset: 0;
-    background: rgba(5,12,30,0.9); z-index: 100;
+    position: fixed; inset: 0; background: rgba(5,12,30,0.9); z-index: 100;
     display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none;
-    transition: opacity 0.3s; backdrop-filter: blur(6px);
+    opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(6px);
   }
   .overlay.show { opacity: 1; pointer-events: all; }
   .modal {
     background: var(--nmi-navy-mid); border-radius: 16px;
     padding: 2.5rem 3rem; text-align: center;
-    transform: scale(0.85);
-    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
-    border: 1px solid rgba(255,255,255,0.08);
-    max-width: 390px; width: 92%;
+    transform: scale(0.85); transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    border: 1px solid rgba(255,255,255,0.08); max-width: 390px; width: 92%;
   }
   .overlay.show .modal { transform: scale(1); }
   .modal-icon { font-size: 52px; line-height: 1; margin-bottom: 0.75rem; }
@@ -297,18 +335,15 @@
   .modal-scores {
     display: flex; justify-content: center; gap: 2rem;
     margin-bottom: 1.75rem; padding: 0.875rem;
-    background: rgba(255,255,255,0.04);
-    border-radius: 8px; border: 1px solid rgba(244,121,32,0.15);
+    background: rgba(255,255,255,0.04); border-radius: 8px; border: 1px solid rgba(244,121,32,0.15);
   }
   .modal-score-item { display: flex; flex-direction: column; gap: 2px; }
   .modal-score-label { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; color: var(--nmi-orange); text-transform: uppercase; }
   .modal-score-val { font-family: 'Barlow Condensed', sans-serif; font-size: 30px; font-weight: 900; color: var(--nmi-white); line-height: 1; }
   .modal-btn {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 18px; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 12px 44px;
-    background: var(--nmi-orange); color: #fff;
+    font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 12px 44px; background: var(--nmi-orange); color: #fff;
     border: none; border-radius: 6px; cursor: pointer;
     transition: background 0.15s, transform 0.1s;
     box-shadow: 0 4px 20px rgba(244,121,32,0.4);
@@ -320,38 +355,34 @@
   /* ══ LANDSCAPE ══ */
   @media (orientation: landscape) and (max-height: 500px) {
     body { justify-content: center; }
-    .game-wrap {
-      flex-direction: row; flex-wrap: nowrap;
-      align-items: center; justify-content: center;
-      gap: 1.5rem; max-width: 100%;
-      padding: 0.4rem 1.5rem;
-    }
-    .left-col { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; min-width: 185px; }
+    .game-wrap { flex-direction: row; flex-wrap: nowrap; align-items: center; justify-content: center; gap: 1.5rem; max-width: 100%; padding: 0.4rem 1.5rem; }
+    .left-col { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; min-width: 200px; }
     .right-col { display: flex; flex-direction: column; align-items: center; flex: 1 1 auto; min-width: 0; }
-    .logo-svg { height: 34px; }
-    .booth-label .title { font-size: 16px; }
-    .divider-v { height: 24px; }
-    .orange-line { width: 34px; margin: 0.25rem 0 0.15rem; }
-    .tagline { font-size: 9px; margin-bottom: 0.35rem; }
-    .diff-row { margin-bottom: 0.4rem; }
-    .diff-pip { width: 8px; height: 8px; }
-    .diff-name { font-size: 11px; }
-    .score-bar { gap: 1.25rem; padding: 0.35rem 1.25rem; margin-bottom: 0.4rem; }
+    .logo-svg { height: 32px; }
+    .booth-label .title { font-size: 15px; }
+    .divider-v { height: 22px; }
+    .orange-line { width: 30px; margin: 0.2rem 0 0.1rem; }
+    .tagline { font-size: 8px; margin-bottom: 0.3rem; }
+    .diff-section { margin-bottom: 0.35rem; }
+    .diff-btns { gap: 3px; }
+    .diff-btn { font-size: 10px; padding: 3px 8px; }
+    .settings-toggle { font-size: 10px; }
+    .settings-panel { max-width: 200px; padding: 0.6rem 0.75rem; gap: 0.4rem; }
+    .setting-name { font-size: 9px; }
+    .setting-val { font-size: 12px; }
+    .score-bar { gap: 1rem; padding: 0.3rem 1rem; margin-bottom: 0.35rem; }
     .score-value { font-size: 20px; }
     .score-label { font-size: 9px; }
-    .phase-strip { margin-bottom: 0.4rem; }
-    .phase-step { font-size: 10px; padding: 0.28rem 0.7rem; }
-    .phase-num { width: 15px; height: 15px; font-size: 8px; }
-    .instruction-banner { font-size: 14px; margin-bottom: 0.5rem; min-height: 20px; }
-    .timer-bar-wrap { margin-bottom: 0.4rem; }
-    .monte-card { width: 80px !important; height: 114px !important; }
-    .c-rank { font-size: 14px; }
-    .c-suit-sm { font-size: 10px; }
-    .c-suit-lg { font-size: 34px; }
-    .c-back-logo { font-size: 16px; }
-    .c-back-logo .sub { font-size: 5px; }
-    .card-table { height: 130px !important; margin-bottom: 0.6rem; }
-    .action-btn { font-size: 17px; padding: 9px 36px; margin-bottom: 0; }
+    .phase-strip { margin-bottom: 0.35rem; }
+    .phase-step { font-size: 10px; padding: 0.25rem 0.65rem; }
+    .phase-num { width: 14px; height: 14px; font-size: 8px; }
+    .instruction-banner { font-size: 14px; margin-bottom: 0.4rem; min-height: 20px; }
+    .timer-bar-wrap { margin-bottom: 0.35rem; }
+    .monte-card { width: 78px !important; height: 112px !important; }
+    .c-rank { font-size: 13px; } .c-suit-sm { font-size: 9px; } .c-suit-lg { font-size: 32px; }
+    .c-back-logo { font-size: 15px; } .c-back-logo .sub { font-size: 5px; }
+    .card-table { height: 125px !important; margin-bottom: 0.5rem; }
+    .action-btn { font-size: 16px; padding: 8px 32px; margin-bottom: 0; }
     .accent-bar, footer { display: none; }
     .modal { padding: 1.25rem 1.75rem; max-width: 320px; }
     .modal-icon { font-size: 34px; margin-bottom: 0.4rem; }
@@ -369,6 +400,7 @@
 
 <div class="game-wrap">
 
+  <!-- LEFT COL -->
   <div class="left-col">
     <div class="logo-area">
       <svg class="logo-svg" viewBox="0 0 160 56" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -386,17 +418,75 @@
     <div class="orange-line"></div>
     <span class="tagline">Find the Queen — if you can</span>
 
-    <!-- DIFFICULTY -->
-    <div class="diff-row">
-      <span class="diff-label">Level</span>
-      <div class="diff-pip" id="pip1"></div>
-      <div class="diff-pip" id="pip2"></div>
-      <div class="diff-pip" id="pip3"></div>
-      <div class="diff-pip" id="pip4"></div>
-      <div class="diff-pip" id="pip5"></div>
-      <span class="diff-name" id="diffName">Easy</span>
+    <!-- DIFFICULTY SELECTOR -->
+    <div class="diff-section">
+      <div class="diff-row">
+        <span class="diff-label">Difficulty</span>
+        <div class="diff-pip" id="pip1"></div>
+        <div class="diff-pip" id="pip2"></div>
+        <div class="diff-pip" id="pip3"></div>
+        <div class="diff-pip" id="pip4"></div>
+        <div class="diff-pip" id="pip5"></div>
+        <span class="diff-name" id="diffName">Easy</span>
+      </div>
+      <div class="diff-btns">
+        <button class="diff-btn active" id="dBtn0" onclick="selectDiff(0)">Easy</button>
+        <button class="diff-btn" id="dBtn1" onclick="selectDiff(1)">Medium</button>
+        <button class="diff-btn" id="dBtn2" onclick="selectDiff(2)">Hard</button>
+        <button class="diff-btn" id="dBtn3" onclick="selectDiff(3)">Brutal</button>
+        <button class="diff-btn" id="dBtn4" onclick="selectDiff(4)">Insane</button>
+      </div>
+
+      <!-- SETTINGS TOGGLE -->
+      <button class="settings-toggle" id="settingsToggle" onclick="toggleSettings()">
+        ⚙ Customise <span class="arrow">▼</span>
+      </button>
+
+      <!-- SETTINGS PANEL -->
+      <div class="settings-panel" id="settingsPanel">
+
+        <div class="setting-row">
+          <div class="setting-top">
+            <span class="setting-name">Shuffle Count</span>
+            <span class="setting-val" id="valSwaps">8</span>
+          </div>
+          <input type="range" id="slSwaps" min="3" max="35" step="1" value="8" oninput="onSlider('swaps',this.value)">
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-top">
+            <span class="setting-name">Shuffle Speed</span>
+            <span class="setting-val" id="valSpeed">360ms</span>
+          </div>
+          <input type="range" id="slSpeed" min="80" max="600" step="10" value="360" oninput="onSlider('speed',this.value)">
+        </div>
+
+        <div class="setting-row">
+          <div class="setting-top">
+            <span class="setting-name">Memorise Time</span>
+            <span class="setting-val" id="valMem">3.5s</span>
+          </div>
+          <input type="range" id="slMem" min="800" max="6000" step="100" value="3500" oninput="onSlider('mem',this.value)">
+        </div>
+
+        <div class="settings-divider"></div>
+
+        <div class="toggle-row">
+          <span class="toggle-lbl">Fake-out Moves</span>
+          <button class="tog" id="togFakeout" onclick="toggleOpt('fakeout')"></button>
+        </div>
+
+        <div class="toggle-row">
+          <span class="toggle-lbl">Triple Rotations</span>
+          <button class="tog" id="togTriple" onclick="toggleOpt('triple')"></button>
+        </div>
+
+        <div class="settings-divider"></div>
+        <button class="settings-reset" onclick="resetToPreset()">↺ Reset to Preset</button>
+      </div>
     </div>
 
+    <!-- SCORE -->
     <div class="score-bar">
       <div class="score-item">
         <span class="score-label">Wins</span>
@@ -415,20 +505,20 @@
     </div>
   </div>
 
+  <!-- RIGHT COL -->
   <div class="right-col">
     <div class="phase-strip">
       <div class="phase-step active" id="step1"><div class="phase-num">1</div> Memorise</div>
       <div class="phase-sep"></div>
       <div class="phase-step" id="step2"><div class="phase-num">2</div> Shuffle</div>
       <div class="phase-sep"></div>
-      <div class="phase-step" id="step3"><div class="phase-num">3</div> Find the King</div>
+      <div class="phase-step" id="step3"><div class="phase-num">3</div> Find the Queen</div>
     </div>
 
     <div class="instruction-banner" id="instrBanner">
       Memorise the <span>Queen of Spades ♠</span> position!
     </div>
 
-    <!-- COUNTDOWN BAR (visible only during memorise) -->
     <div class="timer-bar-wrap" id="timerWrap">
       <div class="timer-bar" id="timerBar"></div>
     </div>
@@ -470,20 +560,22 @@
 
 <script>
 /* ─────────────────────────────────────
-   DIFFICULTY LEVELS
-   streak 0-1 → Easy
-   streak 2   → Medium
-   streak 3   → Hard
-   streak 4   → Brutal
-   streak 5+  → Insane
+   PRESET DIFFICULTY LEVELS
+   Each level has fixed settings. Choosing
+   a preset loads all sliders + toggles.
+   The operator can then tweak individually.
 ───────────────────────────────────── */
-const LEVELS = [
-  { name:'Easy',   color:'#4cde9f', pips:1, swaps:[7,9],   speedMs:360, memoriseMs:3500, fakeout:false, tripleSwap:false },
-  { name:'Medium', color:'#f4c430', pips:2, swaps:[10,13], speedMs:290, memoriseMs:2800, fakeout:false, tripleSwap:false },
-  { name:'Hard',   color:'#f47920', pips:3, swaps:[14,17], speedMs:220, memoriseMs:2200, fakeout:true,  tripleSwap:false },
-  { name:'Brutal', color:'#ff5555', pips:4, swaps:[18,22], speedMs:160, memoriseMs:1600, fakeout:true,  tripleSwap:true  },
-  { name:'Insane', color:'#cc22cc', pips:5, swaps:[24,30], speedMs:115, memoriseMs:1100, fakeout:true,  tripleSwap:true  },
+const PRESETS = [
+  { name:'Easy',   color:'#4cde9f', pips:1, swaps:8,  speedMs:360, memoriseMs:3500, fakeout:false, tripleSwap:false },
+  { name:'Medium', color:'#f4c430', pips:2, swaps:12, speedMs:290, memoriseMs:2800, fakeout:false, tripleSwap:false },
+  { name:'Hard',   color:'#f47920', pips:3, swaps:16, speedMs:210, memoriseMs:2000, fakeout:true,  tripleSwap:false },
+  { name:'Brutal', color:'#ff5555', pips:4, swaps:20, speedMs:155, memoriseMs:1400, fakeout:true,  tripleSwap:true  },
+  { name:'Insane', color:'#cc22cc', pips:5, swaps:27, speedMs:110, memoriseMs:1000, fakeout:true,  tripleSwap:true  },
 ];
+
+// Active custom settings (operator can override after picking a preset)
+let cfg = { ...PRESETS[0] };
+let selectedPreset = 0;
 
 const CARDS = [
   { rank:'Q', suit:'♠', color:'black', label:'Queen of Spades' },
@@ -491,33 +583,120 @@ const CARDS = [
   { rank:'3', suit:'♣', color:'black', label:'3 of Clubs'    },
 ];
 
-let positions = [0,1,2]; // positions[slot] = cardIndex
-let kingSlot  = 0;
-let phase     = 'memorise';
+let positions = [0,1,2];
+let queenSlot = 0;
+let phase = 'memorise';
 let wins = 0, losses = 0, streak = 0;
 let busy = false;
 let cardEls = [];
 let timerRAF, timerRunning = false;
-let autoShuffleTimeout = null;
 
 /* ── HELPERS ── */
 function isLandscape() { return window.innerWidth > window.innerHeight && window.innerHeight < 500; }
-function cW() { return isLandscape() ? 80 : 120; }
-function cH() { return isLandscape() ? 114 : 172; }
-function tableH() { return isLandscape() ? 130 : 200; }
-
-function getLevel() {
-  return LEVELS[Math.min(streak, LEVELS.length - 1)];
-}
-
+function cW() { return isLandscape() ? 78 : 120; }
+function cH() { return isLandscape() ? 112 : 172; }
+function tableH() { return isLandscape() ? 125 : 200; }
 function randBetween(a,b) { return a + Math.floor(Math.random()*(b-a+1)); }
 function delay(ms) { return new Promise(r=>setTimeout(r,ms)); }
+
+/* ── DIFF SELECTOR ── */
+function selectDiff(idx) {
+  selectedPreset = idx;
+  cfg = { ...PRESETS[idx] };
+  // Update buttons
+  for (let i=0;i<5;i++) {
+    document.getElementById('dBtn'+i).className = 'diff-btn' + (i===idx?' active':'');
+  }
+  updateDiffUI();
+  syncSlidersToConfig();
+}
+
+function updateDiffUI() {
+  for (let i=1;i<=5;i++) {
+    const pip = document.getElementById('pip'+i);
+    pip.className = 'diff-pip';
+    if (i<=cfg.pips) pip.classList.add('lit-'+i);
+  }
+  document.getElementById('diffName').textContent = cfg.name;
+  document.getElementById('diffName').style.color = cfg.color;
+}
+
+/* ── SETTINGS PANEL ── */
+function toggleSettings() {
+  const panel = document.getElementById('settingsPanel');
+  const btn   = document.getElementById('settingsToggle');
+  const open  = panel.classList.toggle('open');
+  btn.classList.toggle('open', open);
+}
+
+function syncSlidersToConfig() {
+  document.getElementById('slSwaps').value = cfg.swaps;
+  document.getElementById('slSpeed').value = cfg.speedMs;
+  document.getElementById('slMem').value   = cfg.memoriseMs;
+  document.getElementById('valSwaps').textContent = cfg.swaps;
+  document.getElementById('valSpeed').textContent = cfg.speedMs + 'ms';
+  document.getElementById('valMem').textContent   = (cfg.memoriseMs/1000).toFixed(1) + 's';
+  setToggle('togFakeout', cfg.fakeout);
+  setToggle('togTriple',  cfg.tripleSwap);
+}
+
+function setToggle(id, on) {
+  const el = document.getElementById(id);
+  if (on) el.classList.add('on'); else el.classList.remove('on');
+}
+
+function onSlider(type, val) {
+  val = parseFloat(val);
+  if (type==='swaps') {
+    cfg.swaps = Math.round(val);
+    document.getElementById('valSwaps').textContent = cfg.swaps;
+  } else if (type==='speed') {
+    cfg.speedMs = Math.round(val);
+    document.getElementById('valSpeed').textContent = cfg.speedMs + 'ms';
+  } else if (type==='mem') {
+    cfg.memoriseMs = Math.round(val);
+    document.getElementById('valMem').textContent = (cfg.memoriseMs/1000).toFixed(1) + 's';
+  }
+  // Mark as custom
+  markCustom();
+}
+
+function toggleOpt(type) {
+  if (type==='fakeout') {
+    cfg.fakeout = !cfg.fakeout;
+    setToggle('togFakeout', cfg.fakeout);
+  } else {
+    cfg.tripleSwap = !cfg.tripleSwap;
+    setToggle('togTriple', cfg.tripleSwap);
+  }
+  markCustom();
+}
+
+function markCustom() {
+  // Show "Custom" in diff name when operator changes settings
+  cfg.name = 'Custom';
+  cfg.color = '#aabbcc';
+  cfg.pips = 0;
+  updateDiffUI();
+  // Deselect preset buttons
+  for (let i=0;i<5;i++) document.getElementById('dBtn'+i).classList.remove('active');
+}
+
+function resetToPreset() {
+  cfg = { ...PRESETS[selectedPreset] };
+  updateDiffUI();
+  syncSlidersToConfig();
+  // Re-activate preset button
+  for (let i=0;i<5;i++) {
+    document.getElementById('dBtn'+i).className = 'diff-btn' + (i===selectedPreset?' active':'');
+  }
+}
 
 /* ── SLOT X POSITIONS ── */
 function slotX(slot) {
   const table = document.getElementById('cardTable');
   const W = table.offsetWidth;
-  const gap = isLandscape() ? 18 : 28;
+  const gap = isLandscape() ? 16 : 28;
   const total = cW()*3 + gap*2;
   return (W - total)/2 + slot*(cW()+gap);
 }
@@ -529,7 +708,7 @@ function buildTable() {
   table.innerHTML = '';
   cardEls = [];
 
-  for (let slot = 0; slot < 3; slot++) {
+  for (let slot=0; slot<3; slot++) {
     const el = document.createElement('div');
     el.className = 'monte-card';
     el.dataset.slot = slot;
@@ -559,183 +738,123 @@ function buildTable() {
   }
 }
 
-/* ── FLIP HELPERS ── */
+/* ── FLIP ── */
 function setAllFaceUp(on) {
-  for (const el of cardEls) {
-    if (on) el.classList.add('flipped');
-    else    el.classList.remove('flipped');
-  }
+  for (const el of cardEls) { if(on) el.classList.add('flipped'); else el.classList.remove('flipped'); }
 }
 
 /* ── SWAP ANIMATION ── */
 async function swapSlots(a, b, speedMs) {
-  const elA = cardEls[a];
-  const elB = cardEls[b];
-  const xA  = slotX(a);
-  const xB  = slotX(b);
-  const midY = tableH()/2 - cH()/2;
-  const liftY = midY - (isLandscape() ? 20 : 32);
-  const half  = speedMs * 0.5;
-  const third = speedMs * 0.33;
+  const elA=cardEls[a], elB=cardEls[b];
+  const xA=slotX(a), xB=slotX(b);
+  const midY=tableH()/2-cH()/2;
+  const liftY=midY-(isLandscape()?18:30);
+  const half=speedMs*0.5, third=speedMs*0.33;
 
-  // lift
-  elA.style.transition = `top ${third}ms ease`;
-  elB.style.transition = `top ${third}ms ease`;
-  elA.style.top = liftY + 'px';
-  elB.style.top = liftY + 'px';
+  elA.style.transition=`top ${third}ms ease`; elB.style.transition=`top ${third}ms ease`;
+  elA.style.top=liftY+'px'; elB.style.top=liftY+'px';
   await delay(third);
 
-  // slide
-  elA.style.transition = `left ${half}ms cubic-bezier(0.4,0,0.2,1)`;
-  elB.style.transition = `left ${half}ms cubic-bezier(0.4,0,0.2,1)`;
-  elA.style.left = xB + 'px';
-  elB.style.left = xA + 'px';
+  elA.style.transition=`left ${half}ms cubic-bezier(0.4,0,0.2,1)`;
+  elB.style.transition=`left ${half}ms cubic-bezier(0.4,0,0.2,1)`;
+  elA.style.left=xB+'px'; elB.style.left=xA+'px';
   await delay(half);
 
-  // drop
-  elA.style.transition = `top ${third}ms ease`;
-  elB.style.transition = `top ${third}ms ease`;
-  elA.style.top = midY + 'px';
-  elB.style.top = midY + 'px';
+  elA.style.transition=`top ${third}ms ease`; elB.style.transition=`top ${third}ms ease`;
+  elA.style.top=midY+'px'; elB.style.top=midY+'px';
   await delay(third);
 
-  // update state
-  [cardEls[a], cardEls[b]] = [cardEls[b], cardEls[a]];
-  [positions[a], positions[b]] = [positions[b], positions[a]];
-  if (positions[a]===0) kingSlot = a;
-  if (positions[b]===0) kingSlot = b;
+  [cardEls[a],cardEls[b]]=[cardEls[b],cardEls[a]];
+  [positions[a],positions[b]]=[positions[b],positions[a]];
+  if(positions[a]===0) queenSlot=a;
+  if(positions[b]===0) queenSlot=b;
 }
 
-/* ── THREE-WAY ROTATION ── */
+/* ── TRIPLE ROTATE ── */
 async function tripleRotate(speedMs) {
-  // 0→1→2→0
-  const dir = Math.random() < 0.5 ? [0,1,2] : [2,1,0];
-  const [a,b,c] = dir;
-  const xA = slotX(a), xB = slotX(b), xC = slotX(c);
-  const elA = cardEls[a], elB = cardEls[b], elC = cardEls[c];
-  const midY = tableH()/2 - cH()/2;
-  const liftY = midY - (isLandscape() ? 20 : 32);
-  const half  = speedMs * 0.55;
-  const third = speedMs * 0.3;
+  const dir = Math.random()<0.5?[0,1,2]:[2,1,0];
+  const [a,b,c]=dir;
+  const xA=slotX(a),xB=slotX(b),xC=slotX(c);
+  const elA=cardEls[a],elB=cardEls[b],elC=cardEls[c];
+  const midY=tableH()/2-cH()/2, liftY=midY-(isLandscape()?18:30);
+  const half=speedMs*0.55, third=speedMs*0.3;
 
-  elA.style.transition = `top ${third}ms ease`;
-  elB.style.transition = `top ${third}ms ease`;
-  elC.style.transition = `top ${third}ms ease`;
-  elA.style.top = liftY + 'px';
-  elB.style.top = liftY + 'px';
-  elC.style.top = liftY + 'px';
+  [elA,elB,elC].forEach(e=>{e.style.transition=`top ${third}ms ease`; e.style.top=liftY+'px';});
   await delay(third);
 
-  elA.style.transition = `left ${half}ms cubic-bezier(0.4,0,0.2,1)`;
-  elB.style.transition = `left ${half}ms cubic-bezier(0.4,0,0.2,1)`;
-  elC.style.transition = `left ${half}ms cubic-bezier(0.4,0,0.2,1)`;
-  elA.style.left = xB + 'px';
-  elB.style.left = xC + 'px';
-  elC.style.left = xA + 'px';
+  elA.style.transition=`left ${half}ms cubic-bezier(0.4,0,0.2,1)`; elA.style.left=xB+'px';
+  elB.style.transition=`left ${half}ms cubic-bezier(0.4,0,0.2,1)`; elB.style.left=xC+'px';
+  elC.style.transition=`left ${half}ms cubic-bezier(0.4,0,0.2,1)`; elC.style.left=xA+'px';
   await delay(half);
 
-  elA.style.transition = `top ${third}ms ease`;
-  elB.style.transition = `top ${third}ms ease`;
-  elC.style.transition = `top ${third}ms ease`;
-  elA.style.top = midY + 'px';
-  elB.style.top = midY + 'px';
-  elC.style.top = midY + 'px';
+  [elA,elB,elC].forEach(e=>{e.style.transition=`top ${third}ms ease`; e.style.top=midY+'px';});
   await delay(third);
 
-  // update state: a→b slot, b→c slot, c→a slot
-  const oldA = positions[a], oldB = positions[b], oldC = positions[c];
-  const oldElA = cardEls[a], oldElB = cardEls[b], oldElC = cardEls[c];
-  cardEls[b]    = oldElA;
-  cardEls[c]    = oldElB;
-  cardEls[a]    = oldElC;
-  positions[b]  = oldA;
-  positions[c]  = oldB;
-  positions[a]  = oldC;
-  if (positions[a]===0) kingSlot=a;
-  if (positions[b]===0) kingSlot=b;
-  if (positions[c]===0) kingSlot=c;
+  const [oA,oB,oC]=[positions[a],positions[b],positions[c]];
+  const [eA,eB,eC]=[cardEls[a],cardEls[b],cardEls[c]];
+  cardEls[b]=eA; cardEls[c]=eB; cardEls[a]=eC;
+  positions[b]=oA; positions[c]=oB; positions[a]=oC;
+  [0,1,2].forEach(s=>{ if(positions[s]===0) queenSlot=s; });
 }
 
-/* ── FAKEOUT: start swap, pause mid-air, then reverse or proceed ── */
+/* ── FAKEOUT ── */
 async function fakeSwap(speedMs) {
-  const a = Math.floor(Math.random()*3);
-  let b; do { b=Math.floor(Math.random()*3); } while(b===a);
+  const a=Math.floor(Math.random()*3);
+  let b; do{b=Math.floor(Math.random()*3);}while(b===a);
+  const elA=cardEls[a],elB=cardEls[b];
+  const xA=slotX(a),xB=slotX(b);
+  const midY=tableH()/2-cH()/2, liftY=midY-(isLandscape()?18:30);
+  const sp=speedMs*0.75, third=sp*0.3;
 
-  const elA = cardEls[a], elB = cardEls[b];
-  const xA = slotX(a), xB = slotX(b);
-  const midX = (xA+xB)/2;
-  const midY = tableH()/2 - cH()/2;
-  const liftY = midY - (isLandscape() ? 20 : 32);
-  const sp = speedMs * 0.7;
-  const third = sp * 0.3;
-
-  // lift
-  elA.style.transition = `top ${third}ms ease`;
-  elB.style.transition = `top ${third}ms ease`;
-  elA.style.top = liftY + 'px';
-  elB.style.top = liftY + 'px';
+  elA.style.transition=`top ${third}ms ease`; elB.style.transition=`top ${third}ms ease`;
+  elA.style.top=liftY+'px'; elB.style.top=liftY+'px';
   await delay(third);
 
-  // move PARTWAY only
-  elA.style.transition = `left ${sp*0.4}ms cubic-bezier(0.4,0,0.2,1)`;
-  elB.style.transition = `left ${sp*0.4}ms cubic-bezier(0.4,0,0.2,1)`;
-  elA.style.left = (xA + (xB-xA)*0.45) + 'px';
-  elB.style.left = (xB + (xA-xB)*0.45) + 'px';
-  await delay(sp*0.4);
+  elA.style.transition=`left ${sp*0.38}ms cubic-bezier(0.4,0,0.2,1)`;
+  elB.style.transition=`left ${sp*0.38}ms cubic-bezier(0.4,0,0.2,1)`;
+  elA.style.left=(xA+(xB-xA)*0.43)+'px';
+  elB.style.left=(xB+(xA-xB)*0.43)+'px';
+  await delay(sp*0.38+55);
 
-  // pause — creates confusion
-  await delay(60);
+  elA.style.transition=`left ${sp*0.32}ms cubic-bezier(0.4,0,0.2,1)`;
+  elB.style.transition=`left ${sp*0.32}ms cubic-bezier(0.4,0,0.2,1)`;
+  elA.style.left=xA+'px'; elB.style.left=xB+'px';
+  await delay(sp*0.32);
 
-  // snap BACK
-  elA.style.transition = `left ${sp*0.35}ms cubic-bezier(0.4,0,0.2,1)`;
-  elB.style.transition = `left ${sp*0.35}ms cubic-bezier(0.4,0,0.2,1)`;
-  elA.style.left = xA + 'px';
-  elB.style.left = xB + 'px';
-  await delay(sp*0.35);
-
-  // drop
-  elA.style.transition = `top ${third}ms ease`;
-  elB.style.transition = `top ${third}ms ease`;
-  elA.style.top = midY + 'px';
-  elB.style.top = midY + 'px';
+  elA.style.transition=`top ${third}ms ease`; elB.style.transition=`top ${third}ms ease`;
+  elA.style.top=midY+'px'; elB.style.top=midY+'px';
   await delay(third);
-  // no position state change — it was a fake!
+  // no state change — fake!
 }
 
-/* ── MAIN SHUFFLE SEQUENCE ── */
+/* ── MAIN SHUFFLE ── */
 async function runShuffle() {
   busy = true;
   document.getElementById('actionBtn').disabled = true;
 
-  const lvl = getLevel();
-  const totalSwaps = randBetween(lvl.swaps[0], lvl.swaps[1]);
+  // Add variance: ±2 swaps around the config value
+  const totalSwaps = randBetween(Math.max(3, cfg.swaps-2), cfg.swaps+2);
   let performed = 0;
 
   while (performed < totalSwaps) {
-    // Insert fakeout occasionally at Hard+
-    if (lvl.fakeout && performed > 0 && Math.random() < 0.28) {
-      await fakeSwap(lvl.speedMs);
-      await delay(30);
-      continue; // doesn't count as a real swap
-    }
-
-    // Triple rotate at Brutal+
-    if (lvl.tripleSwap && Math.random() < 0.35) {
-      await tripleRotate(lvl.speedMs);
-      performed += 2; // counts as 2
-      await delay(30);
+    if (cfg.fakeout && performed > 0 && Math.random() < 0.28) {
+      await fakeSwap(cfg.speedMs);
+      await delay(25);
       continue;
     }
-
-    // Normal swap
-    let a = Math.floor(Math.random()*3);
-    let b; do { b=Math.floor(Math.random()*3); } while(b===a);
-    await swapSlots(a, b, lvl.speedMs);
+    if (cfg.tripleSwap && Math.random() < 0.32) {
+      await tripleRotate(cfg.speedMs);
+      performed += 2;
+      await delay(25);
+      continue;
+    }
+    let a=Math.floor(Math.random()*3);
+    let b; do{b=Math.floor(Math.random()*3);}while(b===a);
+    await swapSlots(a, b, cfg.speedMs);
     performed++;
-
-    // Tiny gap between moves (smaller = harder to track)
-    const gap = Math.max(0, 80 - streak * 10);
-    if (gap > 0) await delay(gap);
+    // gap decreases with speed: faster shuffles have no gap
+    const gap = Math.max(0, Math.round((cfg.speedMs - 100) * 0.12));
+    if (gap>0) await delay(gap);
   }
 
   busy = false;
@@ -745,69 +864,46 @@ async function runShuffle() {
 /* ── TIMER BAR ── */
 function startTimer(durationMs) {
   stopTimer();
-  const wrap = document.getElementById('timerWrap');
-  const bar  = document.getElementById('timerBar');
+  const wrap=document.getElementById('timerWrap');
+  const bar=document.getElementById('timerBar');
   wrap.classList.add('visible');
-  bar.style.transition = 'none';
-  bar.style.transform = 'scaleX(1)';
-  bar.style.background = 'var(--nmi-orange)';
-
-  const start = performance.now();
-  timerRunning = true;
+  bar.style.transition='none'; bar.style.transform='scaleX(1)'; bar.style.background='var(--nmi-orange)';
+  const start=performance.now();
+  timerRunning=true;
 
   function tick(now) {
-    if (!timerRunning) return;
-    const elapsed = now - start;
-    const pct = Math.max(0, 1 - elapsed/durationMs);
-    bar.style.transition = 'transform 0.08s linear';
-    bar.style.transform = `scaleX(${pct})`;
-    if (pct < 0.35) bar.style.background = '#ff5555';
-    else if (pct < 0.6) bar.style.background = '#f4c430';
-    if (elapsed < durationMs) {
-      timerRAF = requestAnimationFrame(tick);
-    } else {
-      // Auto-shuffle when timer runs out
-      if (phase === 'memorise') {
-        document.getElementById('instrBanner').innerHTML = 'Time\'s up! Watch carefully...';
-        setTimeout(() => enterShufflePhase(), 200);
-      }
+    if(!timerRunning) return;
+    const pct=Math.max(0,1-(now-start)/durationMs);
+    bar.style.transition='transform 0.08s linear';
+    bar.style.transform=`scaleX(${pct})`;
+    if(pct<0.35) bar.style.background='#ff5555';
+    else if(pct<0.6) bar.style.background='#f4c430';
+    if((now-start)<durationMs) timerRAF=requestAnimationFrame(tick);
+    else if(phase==='memorise') {
+      document.getElementById('instrBanner').innerHTML="Time's up! Watch carefully...";
+      setTimeout(()=>enterShufflePhase(),180);
     }
   }
-  timerRAF = requestAnimationFrame(tick);
+  timerRAF=requestAnimationFrame(tick);
 }
 
 function stopTimer() {
-  timerRunning = false;
-  cancelAnimationFrame(timerRAF);
-  const wrap = document.getElementById('timerWrap');
-  const bar  = document.getElementById('timerBar');
+  timerRunning=false; cancelAnimationFrame(timerRAF);
+  const wrap=document.getElementById('timerWrap');
+  const bar=document.getElementById('timerBar');
   wrap.classList.remove('visible');
-  bar.style.transform = 'scaleX(1)';
-  bar.style.background = 'var(--nmi-orange)';
-}
-
-/* ── DIFFICULTY UI ── */
-function updateDiffUI() {
-  const lvl = getLevel();
-  for (let i=1;i<=5;i++) {
-    const pip = document.getElementById('pip'+i);
-    pip.className = 'diff-pip';
-    if (i<=lvl.pips) pip.classList.add('lit-'+i);
-  }
-  const nameEl = document.getElementById('diffName');
-  nameEl.textContent = lvl.name;
-  nameEl.style.color = lvl.color;
+  bar.style.transform='scaleX(1)'; bar.style.background='var(--nmi-orange)';
 }
 
 /* ── PHASES ── */
 function setPhase(name) {
-  phase = name;
-  const map = {memorise:0, shuffle:1, pick:2, done:2};
+  phase=name;
+  const map={memorise:0,shuffle:1,pick:2,done:2};
   ['step1','step2','step3'].forEach((id,i)=>{
-    const el = document.getElementById(id);
+    const el=document.getElementById(id);
     el.classList.remove('active','done');
-    if (i < map[name])       el.classList.add('done');
-    else if (i === map[name]) el.classList.add('active');
+    if(i<map[name]) el.classList.add('done');
+    else if(i===map[name]) el.classList.add('active');
   });
 }
 
@@ -815,165 +911,127 @@ function enterMemorisePhase() {
   setPhase('memorise');
   setAllFaceUp(true);
   updateDiffUI();
-  const lvl = getLevel();
   document.getElementById('instrBanner').innerHTML =
-    `Memorise the <span>Queen of Spades ♠</span>! <span class="warn">${(lvl.memoriseMs/1000).toFixed(1)}s</span>`;
-  const btn = document.getElementById('actionBtn');
-  btn.textContent = 'Shuffle Now';
-  btn.disabled = false;
-  startTimer(lvl.memoriseMs);
+    `Memorise the <span>Queen of Spades ♠</span>! <span class="warn">${(cfg.memoriseMs/1000).toFixed(1)}s</span>`;
+  const btn=document.getElementById('actionBtn');
+  btn.textContent='Shuffle Now'; btn.disabled=false;
+  startTimer(cfg.memoriseMs);
 }
 
 function enterShufflePhase() {
-  if (phase !== 'memorise') return;
-  clearTimeout(autoShuffleTimeout);
+  if(phase!=='memorise') return;
   stopTimer();
   setPhase('shuffle');
   setAllFaceUp(false);
-  document.getElementById('instrBanner').innerHTML = 'Watch closely...';
-  document.getElementById('actionBtn').disabled = true;
-  setTimeout(() => runShuffle(), 280);
+  document.getElementById('instrBanner').innerHTML='Watch closely...';
+  document.getElementById('actionBtn').disabled=true;
+  setTimeout(()=>runShuffle(),260);
 }
 
 function enterPickPhase() {
   setPhase('pick');
-  const lvl = getLevel();
-  // Harder levels: no hint, just "pick"
-  document.getElementById('instrBanner').innerHTML =
-    streak >= 3
-      ? 'Where is the <span>Queen</span>? Pick now!'
-      : 'Where is the <span>Queen of Spades ♠</span>?';
-  for (let slot=0; slot<3; slot++) {
-    cardEls[slot].classList.add('clickable');
-    cardEls[slot].onclick = () => pickCard(slot);
+  document.getElementById('instrBanner').innerHTML='Where is the <span>Queen of Spades ♠</span>? Pick a card!';
+  for(let s=0;s<3;s++){
+    cardEls[s].classList.add('clickable');
+    cardEls[s].onclick=()=>pickCard(s);
   }
-  document.getElementById('actionBtn').disabled = true;
+  document.getElementById('actionBtn').disabled=true;
 }
 
 /* ── PICK ── */
 async function pickCard(slot) {
-  if (phase !== 'pick' || busy) return;
-  busy = true;
-  phase = 'done';
-  for (const el of cardEls) { el.classList.remove('clickable'); el.onclick = null; }
+  if(phase!=='pick'||busy) return;
+  busy=true; phase='done';
+  for(const el of cardEls){el.classList.remove('clickable'); el.onclick=null;}
 
-  const isWin = slot === kingSlot;
+  const isWin = slot===queenSlot;
   cardEls[slot].classList.add('flipped');
   await delay(300);
   setAllFaceUp(true);
   await delay(480);
 
-  cardEls[kingSlot].classList.add('correct');
-  if (!isWin) {
-    cardEls[slot].classList.add('wrong');
-    cardEls[slot].classList.add('shake');
-  }
+  cardEls[queenSlot].classList.add('correct');
+  if(!isWin){ cardEls[slot].classList.add('wrong','shake'); }
 
-  if (isWin) { wins++; streak++; launchConfetti(); }
-  else { losses++; streak = 0; }
+  if(isWin){ wins++; streak++; launchConfetti(); }
+  else{ losses++; streak=0; }
 
   updateScores();
   await delay(950);
   showModal(isWin);
-  busy = false;
+  busy=false;
 }
 
 function updateScores() {
-  document.getElementById('score-wins').textContent    = wins;
-  document.getElementById('score-losses').textContent  = losses;
-  document.getElementById('score-streak').textContent  = streak;
+  document.getElementById('score-wins').textContent=wins;
+  document.getElementById('score-losses').textContent=losses;
+  document.getElementById('score-streak').textContent=streak;
 }
 
 /* ── MODAL ── */
 function showModal(isWin) {
-  const lvl = getLevel();
-  document.getElementById('modal-icon').textContent = isWin ? '🎉' : '🃏';
-  document.getElementById('modal-title').textContent = isWin ? 'WINNER!' : 'Wrong Card!';
-  document.getElementById('modal-title').className = 'modal-title '+(isWin?'win':'lose');
-
-  let sub = isWin
-    ? `You found the Queen on <strong>${LEVELS[Math.min(streak-1,LEVELS.length-1)].name}</strong> difficulty!`
-    : `The Queen slipped away! Next round: <strong>${lvl.name}</strong>.`;
-  document.getElementById('modal-sub').innerHTML = sub;
-  document.getElementById('modal-wins').textContent   = wins;
-  document.getElementById('modal-losses').textContent = losses;
-  document.getElementById('modal-streak').textContent = streak;
+  document.getElementById('modal-icon').textContent=isWin?'🎉':'🃏';
+  document.getElementById('modal-title').textContent=isWin?'WINNER!':'Wrong Card!';
+  document.getElementById('modal-title').className='modal-title '+(isWin?'win':'lose');
+  document.getElementById('modal-sub').innerHTML=isWin
+    ? `Found the Queen on <strong>${cfg.name}</strong>! Sharp eyes!`
+    : `The Queen slipped away on <strong>${cfg.name}</strong>. Try again!`;
+  document.getElementById('modal-wins').textContent=wins;
+  document.getElementById('modal-losses').textContent=losses;
+  document.getElementById('modal-streak').textContent=streak;
   document.getElementById('overlay').classList.add('show');
-  if (!isWin) stopConfetti();
+  if(!isWin) stopConfetti();
 }
 
 /* ── START ROUND ── */
 function startRound() {
   document.getElementById('overlay').classList.remove('show');
-  stopConfetti();
-  stopTimer();
-  clearTimeout(autoShuffleTimeout);
+  stopConfetti(); stopTimer();
 
-  // Randomise starting layout
-  const arr = [0,1,2];
-  for (let i=arr.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; }
-  positions = arr;
-  kingSlot  = positions.indexOf(0);
+  const arr=[0,1,2];
+  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  positions=arr; queenSlot=positions.indexOf(0);
 
   buildTable();
   enterMemorisePhase();
 }
 
-function handleAction() {
-  if (phase === 'memorise') enterShufflePhase();
-}
+function handleAction() { if(phase==='memorise') enterShufflePhase(); }
 
 /* ── CONFETTI ── */
-const canvas = document.getElementById('confetti-canvas');
-const ctx    = canvas.getContext('2d');
-let confettiPieces=[], confettiRunning=false, confettiRAF2;
-const CCOLORS=['#f47920','#ff9a45','#4cde9f','#ffffff','#1a3a7c','#ffcc44','#ff5599'];
+const canvas=document.getElementById('confetti-canvas');
+const ctx=canvas.getContext('2d');
+let cPieces=[],cRunning=false,cRAF;
+const CC=['#f47920','#ff9a45','#4cde9f','#fff','#1a3a7c','#ffcc44','#ff5599'];
 
-function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-function rb(a,b){ return a+Math.random()*(b-a); }
+function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+window.addEventListener('resize',resizeCanvas); resizeCanvas();
+function rb(a,b){return a+Math.random()*(b-a);}
 
 function launchConfetti(){
-  confettiPieces=[]; confettiRunning=true;
-  for(let i=0;i<150;i++){
-    confettiPieces.push({
-      x:rb(canvas.width*0.15,canvas.width*0.85), y:rb(-120,-5),
-      w:rb(7,14), h:rb(4,9),
-      color:CCOLORS[Math.floor(Math.random()*CCOLORS.length)],
-      vx:rb(-4,4), vy:rb(3,9),
-      angle:rb(0,360), spin:rb(-5,5), opacity:1
-    });
-  }
-  animateConfetti();
+  cPieces=[];cRunning=true;
+  for(let i=0;i<150;i++) cPieces.push({x:rb(canvas.width*0.15,canvas.width*0.85),y:rb(-120,-5),w:rb(7,14),h:rb(4,9),color:CC[Math.floor(Math.random()*CC.length)],vx:rb(-4,4),vy:rb(3,9),angle:rb(0,360),spin:rb(-5,5),opacity:1});
+  animateC();
 }
 
-function animateConfetti(){
-  if(!confettiRunning) return;
+function animateC(){
+  if(!cRunning) return;
   ctx.clearRect(0,0,canvas.width,canvas.height);
   let alive=false;
-  for(const p of confettiPieces){
-    p.x+=p.vx; p.y+=p.vy; p.vy+=0.12; p.angle+=p.spin;
+  for(const p of cPieces){
+    p.x+=p.vx;p.y+=p.vy;p.vy+=0.12;p.angle+=p.spin;
     if(p.y>canvas.height*0.72) p.opacity-=0.022;
-    if(p.opacity>0){
-      alive=true;
-      ctx.save(); ctx.globalAlpha=Math.max(0,p.opacity);
-      ctx.translate(p.x,p.y); ctx.rotate(p.angle*Math.PI/180);
-      ctx.fillStyle=p.color; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
-      ctx.restore();
-    }
+    if(p.opacity>0){alive=true;ctx.save();ctx.globalAlpha=Math.max(0,p.opacity);ctx.translate(p.x,p.y);ctx.rotate(p.angle*Math.PI/180);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();}
   }
-  if(alive) confettiRAF2=requestAnimationFrame(animateConfetti);
+  if(alive) cRAF=requestAnimationFrame(animateC);
   else ctx.clearRect(0,0,canvas.width,canvas.height);
 }
 
-function stopConfetti(){
-  confettiRunning=false; cancelAnimationFrame(confettiRAF2);
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-}
+function stopConfetti(){cRunning=false;cancelAnimationFrame(cRAF);ctx.clearRect(0,0,canvas.width,canvas.height);}
 
 // ── INIT ──
+syncSlidersToConfig();
+updateDiffUI();
 startRound();
 </script>
 </body>
